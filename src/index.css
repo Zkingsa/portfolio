@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-brand-primary: #FF6B00;
+  --color-brand-hover: #FF5500;
+  --color-dark-bg: #090A0F;
+  --color-dark-surface: #12131A;
+  --color-dark-card: #181A22;
+  --color-dark-border: rgba(255, 107, 0, 0.15);
+  --color-dark-border-active: rgba(255, 107, 0, 0.4);
+}
+
+/* Base resets & styles */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--color-dark-bg);
+  color: #F3F4F6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar for the Animeverse Streaming aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252836;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-primary);
+}
+
+/* Glowing container effects (stealth, clean) */
+.glowing-card {
+  position: relative;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.glowing-card:hover {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 10px 40px -10px rgba(255, 107, 0, 0.15), 
+              0 0 15px -3px rgba(255, 107, 0, 0.1);
+}
+
+/* Background Ambient Orbs */
+.ambient-glow-orange {
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.12) 0%, rgba(255, 107, 0, 0) 70%);
+}
+
+.ambient-glow-purple {
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.08) 0%, rgba(147, 51, 234, 0) 70%);
+}
+
+/* Smooth Navigation Highlight Bar */
+.nav-active-bar {
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  height: 3px;
+  background: var(--color-brand-primary);
+  box-shadow: 0 0 10px var(--color-brand-primary);
+  transition: all 0.3s ease;
+}
+
+/* Page entrance keyframe transition */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: fadeInSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Print optimizations for high-quality CV and Licence generation */
+@media print {
+  /* Hide normal layout blocks */
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  header, nav, footer, button, .fixed, .ambient-glow-orange, .ambient-glow-purple, main {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* Exclusively show the selected printed certificate card */
+  .print-container-active {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    background: #ffffff !important;
+    shadow: none !important;
+    border: none !important;
+  }
+  
+  .print-container-active * {
+    visibility: visible !important;
+    color: #111111 !important;
+  }
+}
+
+/* Horizontal Sweeping Emerald/Embroid Light Animation */
+@keyframes sweepLight {
+  0% {
+    left: -50%;
+    opacity: 0.1;
+  }
+  25% {
+    opacity: 1; /* Bright when entering center-left */
+  }
+  75% {
+    opacity: 0.25; /* Dimming as it moves right */
+  }
+  100% {
+    left: 120%;
+    opacity: 0.05;
+  }
+}
+
+.animate-sweep-light {
+  animation: sweepLight 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+
+
