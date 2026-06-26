@@ -112,7 +112,7 @@ export default function Home({ setActiveTab }: HomeProps) {
 
     // 1. Professional Summary
     drawSectionHeader('Professional Summary');
-    drawParagraph('A highly versatile AI Engineer and Full-Stack Developer interning under the YES Youth Program at Capaciti. Currently based in Gqeberha, South Africa, and actively available for full-stack system building, prompt design, and AI development opportunities. Deeply competent in modern web development ecosystem tools (React, Vite, Tailwind CSS), server-side configurations, and deploying advanced generative workflows. Proud holder of a South African Code 14 (EC) Professional Driving Licence with PrDP.');
+    drawParagraph('A highly versatile AI Engineer and Full-Stack Developer interning under the YES Youth Program at CAPACITI. Currently based in Gqeberha, South Africa, and actively available for full-stack system building, prompt design, and AI development opportunities. Deeply competent in modern web development ecosystem tools (React, Vite, Tailwind CSS), server-side configurations, and deploying advanced generative workflows. Proud holder of a South African Code 14 (EC) Professional Driving Licence with PrDP.');
 
     // 2. Work Experience
     drawSectionHeader('Work Experience');
@@ -120,7 +120,7 @@ export default function Home({ setActiveTab }: HomeProps) {
     const jobs = [
       {
         role: 'AI Engineer & Full-Stack Developer (Internship)',
-        company: 'Capaciti (YES Youth Program)',
+        company: 'CAPACITI (YES Youth Program)',
         date: 'Jan 2026 - Present',
         bullets: [
           'Engineering innovative prompt structures and implementing AI pipelines with Google AI Essentials methodologies.',
@@ -280,7 +280,7 @@ export default function Home({ setActiveTab }: HomeProps) {
     drawSectionHeader('Academic Excellence & Achievements');
     const achievements = [
       'Top Performing Coordinator, Walter Sisulu University Peer Tutorial teams (2024).',
-      'Selected as YES Youth Program Delegate at Capaciti based on advanced developer credentials (2026).',
+      'Selected as YES Youth Program Delegate at CAPACITI based on advanced developer credentials (2026).',
       'Active IT Youth Ambassador with heavy logistic capability.'
     ];
     achievements.forEach(ach => {
@@ -358,7 +358,7 @@ export default function Home({ setActiveTab }: HomeProps) {
             <div className="flex flex-wrap gap-2 items-center justify-center lg:justify-start">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-primary/10 px-4 py-1.5 text-xs font-semibold text-brand-primary border border-brand-primary/20">
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>YES Youth Program Intern @ Capaciti</span>
+                <span>YES Youth Program Intern @ CAPACITI</span>
               </div>
               <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -463,7 +463,7 @@ export default function Home({ setActiveTab }: HomeProps) {
                   </div>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-gray-500">Current Role:</span>
-                    <span className="text-white font-semibold">YES Program Intern @ Capaciti</span>
+                    <span className="text-white font-semibold">YES Program Intern @ CAPACITI</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-gray-500">Core Specialty:</span>

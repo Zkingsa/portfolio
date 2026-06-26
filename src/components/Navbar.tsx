@@ -212,7 +212,7 @@ export default function Navbar({ activeTab, onTabClick, tabs }: NavbarProps) {
                       </span>
                     </div>
                     <div className="text-[11px] text-white font-medium">
-                      YES Program Intern @ <span className="text-brand-primary">Capaciti</span>
+                      YES Program Intern @ <span className="text-brand-primary">CAPACITI</span>
                     </div>
                   </div>
 

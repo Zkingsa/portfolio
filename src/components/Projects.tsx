@@ -334,11 +334,14 @@ function ProjectNdaModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 grid min-h-screen place-items-center bg-black/95 px-4 py-6 backdrop-blur-2xl">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/95 px-4 py-4 backdrop-blur-2xl">
       <div
         ref={modalRef}
         tabIndex={-1}
         role="dialog"
+        aria-modal="true"
+        aria-labelledby="nda-modal-title"
+        className="relative mx-auto w-full max-w-3xl overflow-hidden rounded-[32px] border border-orange-400/70 bg-[#070B10] shadow-[0_0_120px_rgba(255,98,20,0.16)] outline-none"
         aria-modal="true"
         aria-labelledby="nda-modal-title"
         className="relative w-full max-w-3xl overflow-hidden rounded-[32px] border border-orange-400/70 bg-[#070B10] shadow-[0_0_120px_rgba(255,98,20,0.16)] outline-none"
@@ -425,7 +428,7 @@ function ProjectNdaModal({
               value={signerCompany}
               onChange={(e) => setSignerCompany(e.target.value)}
               className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
-              placeholder="e.g. Walter Sisulu University / Capaciti Evaluation"
+              placeholder="e.g. Walter Sisulu University / CAPACITI Evaluation"
             />
           </label>
 
@@ -599,7 +602,7 @@ function SimulatorWindow({ project, onClose }: SimulatorProps) {
                   </span>
                 </div>
                 <div className="mt-2 text-[11px] text-white font-medium">
-                  YES Program Intern @ <span className="text-brand-primary">Capaciti</span>
+                  YES Program Intern @ <span className="text-brand-primary">CAPACITI</span>
                 </div>
               </div>
 

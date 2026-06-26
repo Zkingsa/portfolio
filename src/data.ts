@@ -1,4 +1,4 @@
-import profilePhoto from './assets/images/fika_xhosa_attire_1782244245279.jpg';
+import profilePhoto from './assets/images/Fika.jpeg';
 import certificateMockup from './assets/images/certificate_mockup_1782129612246.jpg';
 
 import { 
@@ -13,13 +13,13 @@ export const personalInfo = {
   fullName: "Fika Zekhaya Siximba",
   title: "AI Engineer & Full-Stack Developer",
   tagline: "Unifying Intelligent Systems with Creative Engineered Front-Ends",
-  summary: "A highly versatile AI Engineer and Full-Stack Developer interning under the YES Youth Program at Capaciti. Currently based in Gqeberha, South Africa, and actively available for full-stack system building, prompt design, and AI development opportunities. Deeply competent in modern web development ecosystem tools (React, Vite, Tailwind CSS), server-side configurations, and deploying advanced generative workflows. Proud holder of a South African Code 14 (EC) Professional Driving Licence.",
+  summary: "A highly versatile AI Engineer and Full-Stack Developer interning under the YES Youth Program at CAPACITI. Currently based in Gqeberha, South Africa, and actively available for full-stack system building, prompt design, and AI development opportunities. Deeply competent in modern web development ecosystem tools (React, Vite, Tailwind CSS), server-side configurations, and deploying advanced generative workflows. Proud holder of a South African Code 14 (EC) Professional Driving Licence.",
   photoUrl: profilePhoto,
   email: "siximbazekhaya@gmail.com",
   github: "https://github.com/Zkingsa",
   linkedin: "https://www.linkedin.com/in/fika-zekhaya-siximba-332859312",
   bio: {
-    background: "Born in South Africa, I developed a strong foundation in programmatic logic and system mechanics. In 2025, I graduated with an ICT Diploma in Applications Development from Walter Sisulu University. I focus on sculpting highly interactive client layouts and powering them with robust AI tools and back-ends. I have mentored dozens of student teams as a tutor and assistant, and am currently scaling AI capabilities at Capaciti.",
+    background: "Born in South Africa, I developed a strong foundation in programmatic logic and system mechanics. In 2025, I graduated with an ICT Diploma in Applications Development from Walter Sisulu University. I focus on sculpting highly interactive client layouts and powering them with robust AI tools and back-ends. I have mentored dozens of student teams as a tutor and assistant, and am currently scaling AI capabilities at CAPACITI.",
     vision: "To streamline human-machine interfaces by crafting fast, beautiful front-ends and deploying functional, modern AI solutions.",
     mission: "Deploy clean, type-safe full-stack products while maintaining exceptional reliability and responsive layouts across all device scopes.",
     careerGoals: [
@@ -61,7 +61,7 @@ export const achievementsHistory: AchievementItem[] = [
     id: "ach1",
     year: "2026",
     title: "YES Youth Program Delegate Selection",
-    issuer: "Capaciti",
+    issuer: "CAPACITI",
     description: "Selected into the competitive youth employment program, specializing in advanced AI Engineering and Full-Stack development initiatives.",
     category: "Leadership"
   },
@@ -88,7 +88,7 @@ export const workExperience: WorkExperienceItem[] = [
     id: "work1",
     period: "April 2026 - Present",
     role: "AI Engineer & Full-Stack Developer",
-    company: "Capaciti (YES Youth Program)",
+    company: "CAPACITI (YES Youth Program)",
     type: "Internship",
     logoPlaceholderText: "CAP",
     responsibilities: [
@@ -197,7 +197,7 @@ export const projects: ProjectItem[] = [
     category: "Artificial Intelligence",
     stackCategory: "AI Projects",
     overview: "A developer playground designed to analyze, test, and optimize Google AI and modern model prompt sequences. Integrates custom prompt-engineering rulesets to test visual layouts and output styles before execution.",
-    role: "AI Developer, Capaciti",
+    role: "AI Developer, CAPACITI",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Local Storage", "Lucide Icons"],
     outcomes: [
       "Assigned real-time response ratings using custom prompt templates.",
