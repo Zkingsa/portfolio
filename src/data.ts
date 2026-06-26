@@ -282,7 +282,7 @@ export const certifications: CertificationItem[] = [
     date: "August 19, 2021",
     credentialId: "Ref: 130400005HZF",
     skillsCode: ["Heavy Vehicles > 16t (Code EC)", "Professional Driving Permit (PrDP GP)", "Cargo Logistics Support", "Defensive Driving Rules"],
-    certificateImageUrl: certificateMockup,
+    certificateImageUrl: profilePhoto,
     externalLink: "#"
   }
 ];
