@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Github, Linkedin, Send, Trash2, CheckCircle2, MessageSquare, ShieldAlert } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Github, Linkedin, Send, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { personalInfo } from '../data';
-import { ContactMessage } from '../types';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -14,19 +13,62 @@ export default function Contact() {
   const [errorText, setErrorText] = useState('');
   const [serverFeedback, setServerFeedback] = useState('');
 
-  const [localMsgs, setLocalMsgs] = useState<ContactMessage[]>([]);
+  const submitContactMessage = async (payload: { name: string; email: string; subject: string; message: string }) => {
+    const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
-  // Load sent messages from localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('zekhaya_portfolio_msgs');
-      if (stored) {
-        setLocalMsgs(JSON.parse(stored));
+    if (formspreeEndpoint) {
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message via Formspree.');
       }
-    } catch (e) {
-      console.warn("Could not retrieve local message queues", e);
+      return data;
     }
-  }, []);
+
+    if (web3FormsAccessKey) {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: web3FormsAccessKey,
+          ...payload,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.success !== true) {
+        throw new Error(data.message || 'Failed to send message via Web3Forms.');
+      }
+      return data;
+    }
+
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || (data && data.success === false)) {
+      throw new Error(data.message || 'Failed to dispatch transmission signal to server.');
+    }
+
+    return data;
+  };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,45 +89,14 @@ export default function Contact() {
     setIsSending(true);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          subject: subject.trim(),
-          message: message.trim(),
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || (data && data.success === false)) {
-        throw new Error(data.message || 'Failed to dispatch transmission signal to server.');
-      }
-
-      setServerFeedback(data.message || 'Signal dispatched perfectly!');
-
-      // Save a local copy in the user's outbox buffer
-      const newMsg: ContactMessage = {
-        id: `msg_${Date.now()}`,
+      const data = await submitContactMessage({
         name: name.trim(),
         email: email.trim(),
         subject: subject.trim(),
         message: message.trim(),
-        timestamp: new Date().toLocaleString(),
-        read: false
-      };
+      });
 
-      const updated = [newMsg, ...localMsgs];
-      setLocalMsgs(updated);
-      try {
-        localStorage.setItem('zekhaya_portfolio_msgs', JSON.stringify(updated));
-      } catch (err) {
-        console.warn("Storage quota filled", err);
-      }
+      setServerFeedback(data.message || 'Your message was delivered successfully.');
 
       setSendSuccess(true);
       
@@ -99,16 +110,6 @@ export default function Contact() {
       setErrorText(err.message || 'Failed to dispatch transmission signal.');
     } finally {
       setIsSending(false);
-    }
-  };
-
-  const deleteMsg = (id: string) => {
-    const updated = localMsgs.filter(m => m.id !== id);
-    setLocalMsgs(updated);
-    try {
-      localStorage.setItem('zekhaya_portfolio_msgs', JSON.stringify(updated));
-    } catch (err) {
-      console.warn("Storage quota filled", err);
     }
   };
 
@@ -194,16 +195,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Note box */}
-            <div className="rounded-xl border border-brand-primary/10 bg-brand-primary/[0.02] p-5 space-y-3.5">
-              <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-brand-primary tracking-widest">
-                <ShieldAlert className="h-3.5 w-3.5" />
-                <span>BACKEND CHANNEL ACTIVE</span>
-              </span>
-              <p className="text-[11px] leading-relaxed text-gray-400">
-                This contact channel connects directly to our secure Express backend. Real email forwarding to your inbox is active once SMTP variables (like <strong>SMTP_USER</strong> and <strong>SMTP_PASS</strong>) are set in settings.
-              </p>
-            </div>
 
           </div>
 
@@ -229,7 +220,7 @@ export default function Contact() {
                       {serverFeedback}
                     </p>
                     <p className="text-[10px] text-gray-500 max-w-md mx-auto font-mono uppercase">
-                      // TRANSACTION LOGGED IN OUTBOX HISTORY
+                      // PRIVATE DELIVERY CHANNEL
                     </p>
                   </div>
                   <button
@@ -329,63 +320,16 @@ export default function Contact() {
 
             </div>
 
-            {/* Recruiter Outbox queue dashboard */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-gray-500" />
-                  <h4 className="font-display text-sm font-bold text-white">Interactive Outbox ({localMsgs.length})</h4>
+            <div className="rounded-xl border border-gray-800 bg-[#12131A] p-4">
+              <div className="flex items-start gap-3">
+                <ShieldAlert className="mt-0.5 h-4.5 w-4.5 text-brand-primary" />
+                <div className="space-y-1">
+                  <h4 className="font-display text-sm font-bold text-white">Private delivery</h4>
+                  <p className="text-[11px] leading-relaxed text-gray-400">
+                    Messages sent here go directly to this individual&apos;s email.
+                  </p>
                 </div>
-                {localMsgs.length > 0 && (
-                  <button 
-                    onClick={() => {
-                      if(confirm("Drain message outbox buffer?")) {
-                        setLocalMsgs([]);
-                        localStorage.removeItem('zekhaya_portfolio_msgs');
-                      }
-                    }}
-                    className="text-gray-500 hover:text-red-400 font-mono text-[10px] focus:outline-none"
-                  >
-                    [DRAIN ALL]
-                  </button>
-                )}
               </div>
-
-              {localMsgs.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-gray-800 p-8 text-center text-gray-500 text-xs">
-                  No outgoing messages in current trace buffer. Type a message above to verify outbox dispatch.
-                </div>
-              ) : (
-                <div className="space-y-3.5 max-h-[300px] overflow-y-auto pr-1">
-                  {localMsgs.map((msg) => (
-                    <div 
-                      key={msg.id}
-                      className="rounded-lg border border-gray-800 bg-[#12131A] p-4 space-y-2 relative"
-                    >
-                      <button 
-                        onClick={() => deleteMsg(msg.id)}
-                        className="absolute top-4 right-4 text-gray-600 hover:text-red-400 transition-colors"
-                        title="Delete record from sandbox buffer"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-
-                      <div className="text-[10px] font-mono text-gray-500 flex flex-wrap gap-x-3 gap-y-1">
-                        <span>SENDER: <strong className="text-gray-300">{msg.name}</strong> ({msg.email})</span>
-                        <span>DATE: {msg.timestamp}</span>
-                      </div>
-
-                      <h5 className="font-display text-xs font-bold text-white leading-snug">
-                        Subject: {msg.subject}
-                      </h5>
-
-                      <p className="text-xs text-gray-300 leading-relaxed italic border-l-2 border-brand-primary/40 pl-2.5">
-                        &ldquo;{msg.message}&rdquo;
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
 
           </div>

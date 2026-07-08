@@ -430,7 +430,7 @@ export default function Education() {
                     </p>
 
                     <h5 className="font-sans text-xs sm:text-sm font-extrabold text-amber-900 tracking-wide uppercase px-4 py-1 bg-amber-900/5 rounded border border-amber-900/10 inline-block">
-                      Bachelor's Degree Admission Endorsement
+                      Diploma Admission Endorsement
                     </h5>
 
                     <p className="text-[9px] text-stone-600 font-medium">
