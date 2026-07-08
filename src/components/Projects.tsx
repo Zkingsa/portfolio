@@ -30,6 +30,37 @@ type NdaAcceptData = {
   timestamp: string;
 };
 
+const NDA_STORAGE_KEY = 'fika_portfolio_nda_accepted';
+const NDA_EXPIRY_MS = 24 * 60 * 60 * 1000;
+
+function readStoredNda(): NdaAcceptData | null {
+  try {
+    const saved = localStorage.getItem(NDA_STORAGE_KEY);
+    if (!saved) {
+      return null;
+    }
+
+    const parsed = JSON.parse(saved) as NdaAcceptData;
+    if (!parsed.timestamp) {
+      return null;
+    }
+
+    const acceptedAt = new Date(parsed.timestamp).getTime();
+    if (Number.isNaN(acceptedAt)) {
+      return null;
+    }
+
+    if (Date.now() - acceptedAt > NDA_EXPIRY_MS) {
+      localStorage.removeItem(NDA_STORAGE_KEY);
+      return null;
+    }
+
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 export default function Projects({
   projectsNavKey,
   onNdaAccepted,
@@ -41,27 +72,17 @@ export default function Projects({
 }) {
   const [filterTech, setFilterTech] = useState<string>('All');
   const [selectedSimProject, setSelectedSimProject] = useState<ProjectItem | null>(null);
-  const [ndaAccepted, setNdaAccepted] = useState<NdaAcceptData | null>(() => {
-    try {
-      const saved = localStorage.getItem('fika_portfolio_nda_accepted');
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
+  const [ndaAccepted, setNdaAccepted] = useState<NdaAcceptData | null>(() => readStoredNda());
   const [showNdaPrompt, setShowNdaPrompt] = useState<boolean>(false);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('fika_portfolio_nda_accepted');
-      if (saved) {
-        setNdaAccepted(JSON.parse(saved));
-        setShowNdaPrompt(false);
-      } else {
-        setShowNdaPrompt(true);
-      }
-    } catch {
+    const stored = readStoredNda();
+    if (stored) {
+      setNdaAccepted(stored);
+      setShowNdaPrompt(false);
+    } else {
+      setNdaAccepted(null);
       setShowNdaPrompt(true);
     }
   }, [projectsNavKey]);
@@ -83,7 +104,7 @@ export default function Projects({
         {showNdaPrompt && !ndaAccepted && (
           <ProjectNdaModal
             onAccept={(acceptData) => {
-              localStorage.setItem('fika_portfolio_nda_accepted', JSON.stringify(acceptData));
+              localStorage.setItem(NDA_STORAGE_KEY, JSON.stringify(acceptData));
               setNdaAccepted(acceptData);
               setShowNdaPrompt(false);
               onNdaAccepted();
@@ -292,12 +313,11 @@ function ProjectNdaModal({
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('fika_portfolio_nda_accepted');
+      const saved = readStoredNda();
       if (saved) {
-        const parsed = JSON.parse(saved) as NdaAcceptData;
-        setSignerName(parsed.name);
-        setSignerEmail(parsed.email);
-        setSignerCompany(parsed.company);
+        setSignerName(saved.name);
+        setSignerEmail(saved.email);
+        setSignerCompany(saved.company);
         setSignerAgreement(true);
       }
     } catch {

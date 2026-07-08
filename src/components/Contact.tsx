@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Mail, Github, Linkedin, Send, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { personalInfo } from '../data';
 
+const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xykqaqgp';
+
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,57 +16,18 @@ export default function Contact() {
   const [serverFeedback, setServerFeedback] = useState('');
 
   const submitContactMessage = async (payload: { name: string; email: string; subject: string; message: string }) => {
-    const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
-    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-
-    if (formspreeEndpoint) {
-      const response = await fetch(formspreeEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message via Formspree.');
-      }
-      return data;
-    }
-
-    if (web3FormsAccessKey) {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: web3FormsAccessKey,
-          ...payload,
-        }),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || data.success !== true) {
-        throw new Error(data.message || 'Failed to send message via Web3Forms.');
-      }
-      return data;
-    }
-
-    const response = await fetch('/api/contact', {
+    const response = await fetch(FORM_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify(payload),
     });
 
     const data = await response.json().catch(() => ({}));
-    if (!response.ok || (data && data.success === false)) {
-      throw new Error(data.message || 'Failed to dispatch transmission signal to server.');
+    if (!response.ok) {
+      throw new Error(data.error || data.message || 'Failed to send your message. Please try again later.');
     }
 
     return data;
