@@ -267,13 +267,23 @@ export const certifications: CertificationItem[] = [
   },
   {
     id: "cert2",
-    title: "Generative AI: Prompt Engineering Basics",
-    issuer: "IBM (Coursera)",
+    title: "AI Bootcamp",
+    issuer: "CAPACITI / Coursera",
     date: "May 25, 2026",
-    credentialId: "FRBLMAADT2UA",
-    skillsCode: ["Generative AI Models", "Prompt Engineering", "Large Language Models", "IBM Skills Networks"],
+    credentialId: "26e9a4ab1255dec1a15b1448dcaf31a0",
+    skillsCode: ["AI Bootcamp Completion", "Prompt Engineering", "Generative AI Fundamentals", "Career Readiness"],
     certificateImageUrl: certificateMockup,
-    externalLink: "https://coursera.org/verify/FRBLMAADT2UA"
+    externalLink: "https://coursera.org/share/26e9a4ab1255dec1a15b1448dcaf31a0"
+  },
+  {
+    id: "cert4",
+    title: "Candidate Professional Development",
+    issuer: "Coursera",
+    date: "June 2026",
+    credentialId: "47fceebc92660367c47c76acf9f7873f",
+    skillsCode: ["Professional Growth", "Career Readiness", "Learning Verification", "Coursera Share"],
+    certificateImageUrl: certificateMockup,
+    externalLink: "https://coursera.org/share/47fceebc92660367c47c76acf9f7873f"
   },
   {
     id: "cert3",

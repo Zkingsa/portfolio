@@ -480,7 +480,6 @@ export default function Home({ setActiveTab }: HomeProps) {
             
             {/* Quick caption */}
             <p className="mt-3 text-center text-[10px] font-mono text-gray-500">
-              *Profile photo in elegant traditional Xhosa attire.
             </p>
           </div>
 

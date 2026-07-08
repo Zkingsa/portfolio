@@ -117,7 +117,7 @@ export default function Footer({ activeTab, setActiveTab, tabs }: FooterProps) {
 
         {/* Bottom copyright line with a smooth "Scroll To Top" anchor */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-[11px] font-mono text-gray-500">
-          <p>© {currentYear} Fika Zekhaya Siximba. All rights reserved. Created with high-res dark mode standards.</p>
+          <p>© {currentYear} Fika Zekhaya Siximba. All rights reserved.</p>
           
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

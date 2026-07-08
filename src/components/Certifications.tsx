@@ -10,6 +10,7 @@ export default function Certifications() {
 
   React.useEffect(() => {
     if (selectedCert) {
+      document.body.style.overflow = 'hidden';
       window.scrollTo({ top: 0 });
       setTimeout(() => {
         const scrollContainers = document.querySelectorAll('.fixed.inset-0.overflow-y-auto');
@@ -17,7 +18,13 @@ export default function Certifications() {
           el.scrollTop = 0;
         });
       }, 0);
+    } else {
+      document.body.style.overflow = '';
     }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [selectedCert]);
 
   return (
@@ -126,7 +133,7 @@ export default function Certifications() {
         {/* Certificate lightbox Viewer */}
         {selectedCert && (
           <div className="fixed inset-0 z-50 flex justify-center items-start overflow-y-auto bg-black/90 backdrop-blur-sm p-2 sm:p-4 md:py-8">
-            <div className="relative w-full max-w-4xl rounded-2xl border border-brand-primary/40 bg-[#0A0B10] p-4 sm:p-6 shadow-2xl space-y-6 print-container-active">
+            <div className="relative w-full max-w-4xl max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl border border-brand-primary/40 bg-[#0A0B10] p-4 sm:p-6 shadow-2xl space-y-6 print-container-active">
               
               {/* Header */}
               <div className="flex items-center justify-between border-b border-gray-800 pb-3">
@@ -258,27 +265,27 @@ export default function Certifications() {
                   </div>
                 )}
 
-                {/* Mode 2: IBM Generative AI Prompt Engineering Basics */}
+                {/* Mode 2: CAPACITI AI Bootcamp */}
                 {selectedCert.id === "cert2" && (
                   <div className="relative w-full max-w-[760px] sm:aspect-[1.33] aspect-auto bg-[#FCFCFA] text-gray-900 rounded-lg p-4 sm:p-10 flex flex-col justify-between gap-6 sm:gap-4 shadow-xl select-none select-text overflow-hidden font-sans border-4 sm:border-8 border-stone-200">
                     
-                    {/* Top Section: IBM Striped Branding and Certificate Class */}
+                    {/* Top Section: CAPACITI Branding and Certificate Class */}
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0">
                       <div className="space-y-2">
-                        {/* Styled blue IBM Logo */}
-                        <div className="font-sans font-black text-2xl tracking-tight text-blue-600 select-none flex flex-col leading-none">
+                        {/* Styled CAPACITI Logo */}
+                        <div className="font-sans font-black text-2xl tracking-tight text-slate-900 select-none flex flex-col leading-none">
                           <div className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">authorized by</div>
-                          <span className="text-3xl text-[#006699] font-serif tracking-widest font-black uppercase">IBM</span>
+                          <span className="text-3xl text-blue-700 font-serif tracking-widest font-black uppercase">CAPACITI</span>
                         </div>
                         <div className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">May 25, 2026</div>
                       </div>
 
                       <div className="text-left sm:text-right">
-                        <div className="bg-[#1C3A62] text-white px-3 py-1 text-[10px] font-bold tracking-widest rounded-sm uppercase inline-block">
-                          COURSE CERTIFICATE
+                        <div className="bg-blue-950 text-white px-3 py-1 text-[10px] font-bold tracking-widest rounded-sm uppercase inline-block">
+                          AI BOOTCAMP
                         </div>
-                        <div className="text-[9px] text-[#006699] font-bold tracking-widest uppercase mt-2">
-                          ibm skills network
+                        <div className="text-[9px] text-blue-700 font-bold tracking-widest uppercase mt-2">
+                          powered by coursera
                         </div>
                       </div>
                     </div>
@@ -301,10 +308,10 @@ export default function Certifications() {
 
                       <div className="space-y-2">
                         <h4 className="font-serif text-xl sm:text-2xl font-black text-[#1C3A62] tracking-tight">
-                          Generative AI: Prompt Engineering Basics
+                          AI Bootcamp
                         </h4>
                         <p className="text-[9.5px] text-gray-500 leading-normal max-w-[540px]">
-                          an online course authorized by IBM and offered through Coursera. Coursera has confirmed the identity of this individual and their participation in the course.
+                          a verified short-form program completed through CAPACITI and shared via Coursera. Completion is confirmed by Coursera and reflected in the shared credential link below.
                         </p>
                       </div>
                     </div>
@@ -312,25 +319,6 @@ export default function Certifications() {
                     {/* Signatures & Online Verification Pin */}
                     <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-t border-stone-100 pt-4 gap-6 sm:gap-0">
                       
-                      {/* Signatories */}
-                      <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 text-left">
-                        <div className="space-y-1">
-                          <div className="font-serif text-sm italic font-semibold text-gray-700">Antonio Cangiano</div>
-                          <div className="text-[8px] text-gray-400 leading-tight">
-                            <strong className="text-gray-600">Antonio Cangiano</strong> <br />
-                            Director, IBM Skills Network
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="font-serif text-sm italic font-semibold text-gray-700">Rav Ahuja</div>
-                          <div className="text-[8px] text-gray-400 leading-tight">
-                            <strong className="text-gray-600">Rav Ahuja</strong> <br />
-                            Global Program Director, Skills Network
-                          </div>
-                        </div>
-                      </div>
-
                       {/* Coursera Seal & QR Pin */}
                       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <div className="text-left sm:text-right font-mono text-[8.5px] text-gray-400 space-y-0.5">
@@ -355,7 +343,51 @@ export default function Certifications() {
                   </div>
                 )}
 
-                {/* Mode 3: South African Professional Code 14 Driver's Licence */}
+                {/* Mode 3: Candidate Professional Development Badge */}
+                {selectedCert.id === "cert4" && (
+                  <div className="relative w-full max-w-[760px] aspect-auto bg-[#F8FBFF] text-slate-900 rounded-[3rem] border-[12px] border-blue-100 p-6 sm:p-8 shadow-[0_30px_70px_rgba(15,39,91,0.18)] overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#DBEEFF_0%,transparent_40%)] opacity-80 pointer-events-none" />
+                    <div className="relative flex flex-col items-center gap-5">
+                      <div className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-blue-200 bg-white shadow-[0_15px_40px_rgba(15,39,91,0.12)]">
+                        <div className="text-5xl font-black text-slate-900">C</div>
+                      </div>
+                      <div className="space-y-3 text-center">
+                        <div className="text-[10px] font-semibold uppercase tracking-[0.45em] text-slate-500">
+                          Certified Candidate Development
+                        </div>
+                        <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-none">
+                          Candidate Professional Development
+                        </h3>
+                        <p className="mx-auto max-w-xl text-sm leading-6 text-slate-600">
+                          Verified Coursera recognition for professional growth and candidate readiness, issued as a shared credential for evaluation and verification.
+                        </p>
+                      </div>
+
+                      <div className="w-full rounded-[2.5rem] border border-blue-200 bg-white/90 p-5 shadow-[0_20px_40px_rgba(15,39,91,0.08)]">
+                        <div className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-400">
+                          Verification Link
+                        </div>
+                        <div className="mt-3 w-full overflow-hidden rounded-3xl bg-slate-50 px-4 py-3 break-words">
+                          <a
+                            href={selectedCert.externalLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full text-base font-semibold text-blue-700 underline decoration-blue-300 hover:text-blue-900 whitespace-normal break-words"
+                          >
+                            coursera.org/share/{selectedCert.credentialId}
+                          </a>
+                        </div>
+                      </div>
+
+                      <div className="inline-flex items-center justify-center gap-3 rounded-full bg-blue-950 px-5 py-3 text-sm font-bold text-white">
+                        <span>powered by</span>
+                        <span className="uppercase tracking-[0.45em]">coursera</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mode 4: South African Professional Code 14 Driver's Licence */}
                 {selectedCert.id === "cert3" && (
                   <div className="relative w-full max-w-[760px] sm:aspect-[1.45] aspect-auto bg-gradient-to-tr from-[#EDEDDF] to-[#E3E4CC] text-gray-900 rounded-lg p-4 sm:p-6 flex flex-col justify-between gap-6 sm:gap-2 shadow-2xl relative select-none font-sans overflow-hidden border-4 sm:border-6 border-stone-300">
                     
