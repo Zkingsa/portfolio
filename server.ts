@@ -20,7 +20,77 @@ type ContactMessageRecord = {
   read: boolean;
 };
 
+type NdaViewerRecord = {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  timestamp: string;
+  source: string;
+};
+
 const receivedMessages: ContactMessageRecord[] = [];
+const ndaViewerRecords: NdaViewerRecord[] = [];
+
+async function sendEmailNotification(payload: { subject: string; text: string; html: string; replyTo?: string }) {
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  if (!smtpUser || !smtpPass) {
+    return null;
+  }
+
+  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "siximbazekhaya@gmail.com";
+  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
+  const smtpPort = parseInt(process.env.SMTP_PORT || "465", 10);
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"Portfolio Viewer" <${smtpUser}>`,
+    to: receiverEmail,
+    replyTo: payload.replyTo,
+    subject: payload.subject,
+    text: payload.text,
+    html: payload.html,
+  });
+
+  return true;
+}
+
+async function syncViewerToGoogleSheets(payload: NdaViewerRecord) {
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+  if (!webhookUrl) {
+    return null;
+  }
+
+  const response = await fetch(webhookUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: payload.name,
+      email: payload.email,
+      company: payload.company,
+      timestamp: payload.timestamp,
+      source: payload.source,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Google Sheets sync failed: ${errorText}`);
+  }
+
+  return true;
+}
 
 async function sendWhatsAppNotification(payload: { name: string; email: string; subject: string; message: string }) {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -62,6 +132,62 @@ app.use(express.urlencoded({ extended: true }));
 // Health Check API
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Server is fully operational." });
+});
+
+app.post("/api/nda-viewer", async (req, res) => {
+  const { name, email, company, timestamp } = req.body;
+
+  if (!name || !email || !timestamp) {
+    return res.status(400).json({
+      success: false,
+      message: "Name, email, and timestamp are required.",
+    });
+  }
+
+  const record: NdaViewerRecord = {
+    id: `viewer_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    name: name.trim(),
+    email: email.trim(),
+    company: company?.trim() || "Not provided",
+    timestamp: timestamp.trim(),
+    source: "nda_acceptance",
+  };
+
+  ndaViewerRecords.unshift(record);
+  if (ndaViewerRecords.length > 100) {
+    ndaViewerRecords.length = 100;
+  }
+
+  try {
+    const sheetSync = await syncViewerToGoogleSheets(record);
+    const emailSent = await sendEmailNotification({
+      subject: `[Portfolio Viewer] ${record.name}`,
+      replyTo: record.email,
+      text: `New portfolio project viewer accepted the NDA.\nName: ${record.name}\nEmail: ${record.email}\nCompany: ${record.company}\nTimestamp: ${record.timestamp}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #e2b714;">New Portfolio Viewer</h2>
+          <p><strong>Name:</strong> ${record.name}</p>
+          <p><strong>Email:</strong> ${record.email}</p>
+          <p><strong>Company:</strong> ${record.company}</p>
+          <p><strong>Timestamp:</strong> ${record.timestamp}</p>
+        </div>
+      `,
+    });
+
+    return res.json({
+      success: true,
+      message: sheetSync || emailSent
+        ? "Viewer registration recorded and synced."
+        : "Viewer registration recorded locally. Configure Google Sheets and SMTP for external syncing.",
+    });
+  } catch (error: any) {
+    console.error("[NDA Viewer API] External sync failed:", error);
+    return res.json({
+      success: true,
+      message: "Viewer registration recorded locally. External sync could not be completed.",
+    });
+  }
 });
 
 // Mail Transmission API

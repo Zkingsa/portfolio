@@ -32,6 +32,46 @@ type NdaAcceptData = {
 
 const NDA_STORAGE_KEY = 'fika_portfolio_nda_accepted';
 const NDA_EXPIRY_MS = 24 * 60 * 60 * 1000;
+const WEB3FORMS_ACCESS_KEY = '13584729-ae51-4551-9b7f-efe3fc569114';
+
+async function submitViewerRegistration(payload: { name: string; email: string; company: string; timestamp: string }) {
+  const serverResponse = await fetch('/api/nda-viewer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const serverData = await serverResponse.json().catch(() => ({}));
+  if (!serverResponse.ok || serverData.success !== true) {
+    throw new Error(serverData.message || 'Failed to save viewer registration.');
+  }
+
+  const web3FormsResponse = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_ACCESS_KEY,
+      name: payload.name,
+      email: payload.email,
+      subject: 'Portfolio Project Viewer Registration',
+      message: `Project portfolio viewer accepted NDA for evaluation. Company/Institution: ${payload.company || 'Not provided'}\nTimestamp: ${payload.timestamp}`,
+      company: payload.company,
+      timestamp: payload.timestamp,
+      source: 'nda_acceptance',
+    }),
+  });
+
+  const web3FormsData = await web3FormsResponse.json().catch(() => ({}));
+  if (!web3FormsResponse.ok || web3FormsData.success !== true) {
+    console.warn('Web3Forms registration warning:', web3FormsData.message || web3FormsData);
+  }
+}
 
 function readStoredNda(): NdaAcceptData | null {
   try {
@@ -104,6 +144,14 @@ export default function Projects({
         {showNdaPrompt && !ndaAccepted && (
           <ProjectNdaModal
             onAccept={(acceptData) => {
+              void (async () => {
+                try {
+                  await submitViewerRegistration(acceptData);
+                } catch (error) {
+                  console.warn('Could not save project viewer registration:', error);
+                }
+              })();
+
               localStorage.setItem(NDA_STORAGE_KEY, JSON.stringify(acceptData));
               setNdaAccepted(acceptData);
               setShowNdaPrompt(false);
