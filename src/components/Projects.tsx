@@ -31,8 +31,16 @@ type NdaAcceptData = {
 };
 
 const NDA_STORAGE_KEY = 'fika_portfolio_nda_accepted';
-const NDA_EXPIRY_MS = 24 * 60 * 60 * 1000;
-const WEB3FORMS_ACCESS_KEY = '13584729-ae51-4551-9b7f-efe3fc569114';
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+function isSameLocalDay(dateA: Date, dateB: Date) {
+  return (
+    dateA.getFullYear() === dateB.getFullYear() &&
+    dateA.getMonth() === dateB.getMonth() &&
+    dateA.getDate() === dateB.getDate()
+  );
+}
 
 async function submitViewerRegistration(payload: { name: string; email: string; company: string; timestamp: string }) {
   const serverResponse = await fetch('/api/nda-viewer', {
@@ -49,27 +57,38 @@ async function submitViewerRegistration(payload: { name: string; email: string; 
     throw new Error(serverData.message || 'Failed to save viewer registration.');
   }
 
-  const web3FormsResponse = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({
-      access_key: WEB3FORMS_ACCESS_KEY,
-      name: payload.name,
-      email: payload.email,
-      subject: 'Portfolio Project Viewer Registration',
-      message: `Project portfolio viewer accepted NDA for evaluation. Company/Institution: ${payload.company || 'Not provided'}\nTimestamp: ${payload.timestamp}`,
-      company: payload.company,
-      timestamp: payload.timestamp,
-      source: 'nda_acceptance',
-    }),
-  });
+  if (!WEB3FORMS_ACCESS_KEY || typeof window === 'undefined') {
+    if (!WEB3FORMS_ACCESS_KEY) {
+      console.info('Skipping Web3Forms submission: access key is not configured.');
+    }
+    return;
+  }
 
-  const web3FormsData = await web3FormsResponse.json().catch(() => ({}));
-  if (!web3FormsResponse.ok || web3FormsData.success !== true) {
-    console.warn('Web3Forms registration warning:', web3FormsData.message || web3FormsData);
+  try {
+    const web3FormsResponse = await fetch(WEB3FORMS_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        name: payload.name,
+        email: payload.email,
+        subject: 'Portfolio Project Viewer Registration',
+        message: `Project portfolio viewer accepted NDA for evaluation. Company/Institution: ${payload.company || 'Not provided'}\nTimestamp: ${payload.timestamp}`,
+        company: payload.company,
+        timestamp: payload.timestamp,
+        source: 'nda_acceptance',
+      }),
+    });
+
+    const web3FormsData = await web3FormsResponse.json().catch(() => ({}));
+    if (!web3FormsResponse.ok || web3FormsData.success !== true) {
+      console.warn('Web3Forms registration warning:', web3FormsData.message || web3FormsData);
+    }
+  } catch (error) {
+    console.warn('Web3Forms submission failed. Backend NDA provider already handled registration.', error);
   }
 }
 
@@ -85,12 +104,12 @@ function readStoredNda(): NdaAcceptData | null {
       return null;
     }
 
-    const acceptedAt = new Date(parsed.timestamp).getTime();
-    if (Number.isNaN(acceptedAt)) {
+    const acceptedAt = new Date(parsed.timestamp);
+    if (Number.isNaN(acceptedAt.getTime())) {
       return null;
     }
 
-    if (Date.now() - acceptedAt > NDA_EXPIRY_MS) {
+    if (!isSameLocalDay(acceptedAt, new Date())) {
       localStorage.removeItem(NDA_STORAGE_KEY);
       return null;
     }
