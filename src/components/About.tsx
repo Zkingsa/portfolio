@@ -62,9 +62,9 @@ export default function About() {
                 {personalInfo.bio.interests.map((interest, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center rounded-md bg-[#191A23] border border-gray-800 px-3 py-1.5 text-xs font-medium text-gray-200 transition-colors duration-200 hover:border-brand-primary/40 hover:text-white"
+                    className="group inline-flex items-center rounded-md bg-[#191A23] border border-gray-800 px-3 py-1.5 text-xs font-medium text-gray-200 transition duration-200 hover:border-brand-primary/40 hover:text-white hover:shadow-[0_0_16px_rgba(56,189,248,0.18)]"
                   >
-                    <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary" />
+                    <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary transition duration-200 group-hover:bg-brand-primary/80" />
                     {interest}
                   </span>
                 ))}
