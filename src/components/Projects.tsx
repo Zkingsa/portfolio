@@ -393,14 +393,14 @@ function ProjectNdaModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/95 px-4 py-4 backdrop-blur-2xl sm:px-6 sm:py-6">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/95 px-4 py-4 backdrop-blur-2xl sm:px-6 sm:py-6">
       <div
         ref={modalRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="nda-modal-title"
-        className="relative my-auto flex w-full max-w-3xl max-h-[min(92dvh,58rem)] flex-col overflow-hidden rounded-[32px] border border-orange-400/70 bg-[#070B10] shadow-[0_0_120px_rgba(255,98,20,0.16)] outline-none"
+        className="relative mx-auto my-3 flex w-full max-w-3xl max-h-[min(92dvh,58rem)] flex-col overflow-hidden rounded-[32px] border border-orange-400/70 bg-[#070B10] shadow-[0_0_120px_rgba(255,98,20,0.16)] outline-none"
       >
         <div className="flex flex-shrink-0 items-start justify-between gap-4 border-b border-orange-500/20 bg-[#0C0F16] px-5 py-4 sm:px-6 sm:py-5">
           <div className="max-w-[85%]">
@@ -425,7 +425,7 @@ function ProjectNdaModal({
 
         <form onSubmit={handleNdaSubmit} className="flex-1 min-h-0 space-y-6 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
           <div className="rounded-3xl border border-orange-500/20 bg-[#0B0E14] p-5 text-sm text-gray-300 shadow-[inset_0_0_0_1px_rgba(255,126,39,0.08)]">
-            <div className="space-y-4 max-h-[270px] overflow-y-auto pr-3">
+            <div className="space-y-4 max-h-[40dvh] overflow-y-auto pr-3 sm:max-h-[270px]">
               <div>
                 <p className="font-semibold text-sm uppercase tracking-[0.18em] text-orange-300">1. Purpose & Intent</p>
                 <p className="mt-2 leading-7 text-gray-300">
@@ -532,14 +532,14 @@ function VideoModal({ onClose }: { onClose: () => void }) {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-60 grid min-h-screen place-items-center bg-black/95 p-4">
+    <div className="fixed inset-0 z-60 overflow-y-auto bg-black/95 p-4">
       <div
         ref={modalRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="video-modal-title"
-        className="relative w-full max-w-5xl overflow-hidden rounded-[28px] border border-brand-primary/40 bg-[#07090F] shadow-[0_0_80px_rgba(28,41,80,0.4)] outline-none"
+        className="relative mx-auto my-3 w-full max-w-5xl overflow-hidden rounded-[28px] border border-brand-primary/40 bg-[#07090F] shadow-[0_0_80px_rgba(28,41,80,0.4)] outline-none"
       >
         <button
           onClick={onClose}
@@ -587,14 +587,14 @@ function SimulatorWindow({ project, onClose }: SimulatorProps) {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 grid min-h-screen place-items-center bg-black/80 backdrop-blur-sm p-4 sm:p-6">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 p-4 backdrop-blur-sm sm:p-6">
       <div
         ref={modalRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="sandbox-modal-title"
-        className="relative w-full max-w-2xl overflow-hidden rounded-[28px] border border-brand-primary/40 bg-[#090A0F] shadow-[0_0_100px_rgba(16,185,129,0.15)] outline-none"
+        className="relative mx-auto my-3 w-full max-w-2xl overflow-hidden rounded-[28px] border border-brand-primary/40 bg-[#090A0F] shadow-[0_0_100px_rgba(16,185,129,0.15)] outline-none"
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#12131A]">
           <div>
@@ -613,7 +613,7 @@ function SimulatorWindow({ project, onClose }: SimulatorProps) {
         </div>
 
         {project.demoUrl ? (
-          <div className="relative h-[68vh] min-h-[520px] bg-[#05070B]">
+          <div className="relative h-[55dvh] min-h-[320px] bg-[#05070B] sm:h-[68vh] sm:min-h-[520px]">
             <iframe
               src={project.demoUrl}
               title={project.title}
