@@ -423,10 +423,11 @@ function ProjectNdaModal({
           </button>
         </div>
 
-        <form onSubmit={handleNdaSubmit} className="flex-1 min-h-0 space-y-6 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
-          <div className="rounded-3xl border border-orange-500/20 bg-[#0B0E14] p-5 text-sm text-gray-300 shadow-[inset_0_0_0_1px_rgba(255,126,39,0.08)]">
-            <div className="space-y-4 max-h-[40dvh] overflow-y-auto pr-3 sm:max-h-[270px]">
-              <div>
+        <form onSubmit={handleNdaSubmit} className="flex min-h-0 flex-1 flex-col overflow-hidden px-5 py-5 sm:px-6 sm:py-6">
+          <div className="flex-1 min-h-0 space-y-6 overflow-y-auto pr-1">
+            <div className="rounded-3xl border border-orange-500/20 bg-[#0B0E14] p-5 text-sm text-gray-300 shadow-[inset_0_0_0_1px_rgba(255,126,39,0.08)]">
+              <div className="space-y-4 max-h-[40dvh] overflow-y-auto pr-3 sm:max-h-[270px]">
+                <div>
                 <p className="font-semibold text-sm uppercase tracking-[0.18em] text-orange-300">1. Purpose & Intent</p>
                 <p className="mt-2 leading-7 text-gray-300">
                   This workspace contains proprietary designs, internal business-logic flows, custom database models, and intellectual property developed by Fika Zekhaya Siximba. Access is provided solely for peer assessment, recruitment evaluations, or academic review.
@@ -447,62 +448,63 @@ function ProjectNdaModal({
                 </p>
               </div>
 
-              <div>
-                <p className="font-semibold text-sm uppercase tracking-[0.18em] text-orange-300">4. Remedies</p>
-                <p className="mt-2 leading-7 text-gray-300">
-                  Any infringement or plagiarism of this property represents a direct breach of evaluation conditions. The author reserves all rights to initiate legal action, request copyright takedowns, or claim civil damages.
-                </p>
+                <div>
+                  <p className="font-semibold text-sm uppercase tracking-[0.18em] text-orange-300">4. Remedies</p>
+                  <p className="mt-2 leading-7 text-gray-300">
+                    Any infringement or plagiarism of this property represents a direct breach of evaluation conditions. The author reserves all rights to initiate legal action, request copyright takedowns, or claim civil damages.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
-              Full Name
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
+                Full Name
+                <input
+                  value={signerName}
+                  onChange={(e) => setSignerName(e.target.value)}
+                  className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
+                  placeholder="e.g. Jane Doe"
+                />
+              </label>
+              <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
+                Email Address
+                <input
+                  type="email"
+                  value={signerEmail}
+                  onChange={(e) => setSignerEmail(e.target.value)}
+                  className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
+                  placeholder="e.g. jane@company.com"
+                />
+              </label>
+            </div>
+
+            <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 block">
+              Company / Institution
               <input
-                value={signerName}
-                onChange={(e) => setSignerName(e.target.value)}
+                value={signerCompany}
+                onChange={(e) => setSignerCompany(e.target.value)}
                 className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
-                placeholder="e.g. Jane Doe"
+                placeholder="e.g. Walter Sisulu University / CAPACITI Evaluation"
               />
             </label>
-            <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
-              Email Address
+
+            <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-gray-800 bg-[#080A10] p-4 text-sm text-gray-300 transition hover:border-orange-400">
               <input
-                type="email"
-                value={signerEmail}
-                onChange={(e) => setSignerEmail(e.target.value)}
-                className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
-                placeholder="e.g. jane@company.com"
+                type="checkbox"
+                checked={signerAgreement}
+                onChange={(e) => setSignerAgreement(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-700 bg-[#080A10] text-orange-400 focus:ring-orange-400"
               />
+              <span>
+                I accept and agree to all terms of this Non-Disclosure & Intellectual Property Agreement. I agree that I am viewing these projects for evaluation purposes and will not use them to gain advantage anywhere.
+              </span>
             </label>
+
+            {ndaError && <p className="text-sm text-red-500">{ndaError}</p>}
           </div>
 
-          <label className="space-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 block">
-            Company / Institution
-            <input
-              value={signerCompany}
-              onChange={(e) => setSignerCompany(e.target.value)}
-              className="w-full rounded-2xl border border-gray-800 bg-[#080A10] px-4 py-3 text-sm text-white outline-none transition focus:border-orange-400"
-              placeholder="e.g. Walter Sisulu University / CAPACITI Evaluation"
-            />
-          </label>
-
-          <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-gray-800 bg-[#080A10] p-4 text-sm text-gray-300 transition hover:border-orange-400">
-            <input
-              type="checkbox"
-              checked={signerAgreement}
-              onChange={(e) => setSignerAgreement(e.target.checked)}
-              className="mt-1 h-4 w-4 rounded border-gray-700 bg-[#080A10] text-orange-400 focus:ring-orange-400"
-            />
-            <span>
-              I accept and agree to all terms of this Non-Disclosure & Intellectual Property Agreement. I agree that I am viewing these projects for evaluation purposes and will not use them to gain advantage anywhere.
-            </span>
-          </label>
-
-          {ndaError && <p className="text-sm text-red-500">{ndaError}</p>}
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <div className="mt-4 flex flex-col gap-3 border-t border-gray-800/60 bg-[#070B10] pt-4 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onDismiss}
