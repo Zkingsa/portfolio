@@ -10,7 +10,9 @@ interface HomeProps {
 
 export default function Home({ setActiveTab }: HomeProps) {
   const downloadPDFCV = () => {
-    const doc = new jsPDF({
+    console.log('downloadPDFCV invoked');
+    try {
+      const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4'
@@ -285,7 +287,14 @@ export default function Home({ setActiveTab }: HomeProps) {
       doc.text('Generated via Accredited Developer System', marginX + contentWidth - 55, pageHeight - 8);
     }
 
-    doc.save('Fika_Zekhaya_Siximba_CV.pdf');
+      doc.save('Fika_Zekhaya_Siximba_CV.pdf');
+    } catch (err) {
+      // surface runtime errors to the user and console for debugging
+      // keep silent failures from blocking the UI
+      // eslint-disable-next-line no-console
+      console.error('downloadPDFCV error', err);
+      try { alert('CV generation failed: ' + (err && err.message ? err.message : String(err))); } catch (e) {}
+    }
   };
 
   return (
@@ -338,6 +347,7 @@ export default function Home({ setActiveTab }: HomeProps) {
               </button>
               
               <button
+                type="button"
                 onClick={downloadPDFCV}
                 className="inline-flex h-12 items-center gap-2 rounded-lg bg-transparent border border-brand-primary/30 px-5 text-sm font-semibold text-brand-primary transition-all duration-200 hover:bg-brand-primary/5 hover:border-brand-primary h-12 cursor-pointer"
                 title="Download verified professional PDF resume/CV"
