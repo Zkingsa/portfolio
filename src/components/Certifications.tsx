@@ -132,7 +132,7 @@ export default function Certifications() {
 
         {/* Certificate lightbox Viewer */}
         {selectedCert && (
-          <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto bg-black/90 backdrop-blur-sm p-2 sm:p-4 md:py-8">
+          <div className="fixed inset-0 z-50 flex justify-center items-start overflow-y-auto bg-black/90 backdrop-blur-sm p-2 sm:p-4 md:py-8">
             <div className="relative w-full max-w-4xl max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl border border-brand-primary/40 bg-[#0A0B10] p-4 sm:p-6 shadow-2xl space-y-6 print-container-active">
               
               {/* Header */}
