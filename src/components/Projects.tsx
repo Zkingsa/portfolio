@@ -31,8 +31,6 @@ type NdaAcceptData = {
 };
 
 const NDA_STORAGE_KEY = 'fika_portfolio_nda_accepted';
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '';
-const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
 function isSameLocalDay(dateA: Date, dateB: Date) {
   return (
@@ -55,40 +53,6 @@ async function submitViewerRegistration(payload: { name: string; email: string; 
   const serverData = await serverResponse.json().catch(() => ({}));
   if (!serverResponse.ok || serverData.success !== true) {
     throw new Error(serverData.message || 'Failed to save viewer registration.');
-  }
-
-  if (!WEB3FORMS_ACCESS_KEY || typeof window === 'undefined') {
-    if (!WEB3FORMS_ACCESS_KEY) {
-      console.info('Skipping Web3Forms submission: access key is not configured.');
-    }
-    return;
-  }
-
-  try {
-    const web3FormsResponse = await fetch(WEB3FORMS_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_ACCESS_KEY,
-        name: payload.name,
-        email: payload.email,
-        subject: 'Portfolio Project Viewer Registration',
-        message: `Project portfolio viewer accepted NDA for evaluation. Company/Institution: ${payload.company || 'Not provided'}\nTimestamp: ${payload.timestamp}`,
-        company: payload.company,
-        timestamp: payload.timestamp,
-        source: 'nda_acceptance',
-      }),
-    });
-
-    const web3FormsData = await web3FormsResponse.json().catch(() => ({}));
-    if (!web3FormsResponse.ok || web3FormsData.success !== true) {
-      console.warn('Web3Forms registration warning:', web3FormsData.message || web3FormsData);
-    }
-  } catch (error) {
-    console.warn('Web3Forms submission failed. Backend NDA provider already handled registration.', error);
   }
 }
 

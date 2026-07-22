@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import nodemailer from "nodemailer";
@@ -9,6 +10,8 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
+const DATA_DIR = path.join(process.cwd(), "data");
+const NDA_STORAGE_FILE = path.join(DATA_DIR, "nda-viewers.json");
 
 type ContactMessageRecord = {
   id: string;
@@ -30,16 +33,16 @@ type NdaViewerRecord = {
 };
 
 const receivedMessages: ContactMessageRecord[] = [];
-const ndaViewerRecords: NdaViewerRecord[] = [];
+let ndaViewerRecords: NdaViewerRecord[] = [];
 
-async function sendEmailNotification(payload: { subject: string; text: string; html: string; replyTo?: string }) {
+async function sendEmailNotification(payload: { subject: string; text: string; html: string; replyTo?: string; receiverEmail?: string }) {
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
   if (!smtpUser || !smtpPass) {
     return null;
   }
 
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "siximbazekhaya@gmail.com";
+  const receiverEmail = payload.receiverEmail || process.env.NDA_RECEIVER_EMAIL || process.env.CONTACT_RECEIVER_EMAIL || "siximbazekhaya@gmail.com";
   const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
   const smtpPort = parseInt(process.env.SMTP_PORT || "465", 10);
   const transporter = nodemailer.createTransport({
@@ -62,6 +65,40 @@ async function sendEmailNotification(payload: { subject: string; text: string; h
   });
 
   return true;
+}
+
+async function ensureDataDirectory() {
+  try {
+    await fs.promises.mkdir(DATA_DIR, { recursive: true });
+  } catch (error) {
+    console.error('[Server] Failed to create data directory:', error);
+  }
+}
+
+async function loadNdaViewerRecords() {
+  try {
+    await ensureDataDirectory();
+    const raw = await fs.promises.readFile(NDA_STORAGE_FILE, 'utf8');
+    const records = JSON.parse(raw);
+    if (Array.isArray(records)) {
+      ndaViewerRecords = records;
+    }
+  } catch (error: any) {
+    if (error.code !== 'ENOENT') {
+      console.error('[Server] Failed to load NDA viewer storage:', error);
+    }
+  }
+}
+
+async function persistNdaViewerRecords() {
+  try {
+    await ensureDataDirectory();
+    await fs.promises.writeFile(NDA_STORAGE_FILE, JSON.stringify(ndaViewerRecords, null, 2), 'utf8');
+    return true;
+  } catch (error) {
+    console.error('[Server] Failed to persist NDA viewer record:', error);
+    return false;
+  }
 }
 
 async function syncViewerToGoogleSheets(payload: NdaViewerRecord) {
@@ -158,11 +195,17 @@ app.post("/api/nda-viewer", async (req, res) => {
     ndaViewerRecords.length = 100;
   }
 
+  const savedToFile = await persistNdaViewerRecords();
+  if (!savedToFile) {
+    console.warn('[NDA Viewer API] Could not persist NDA viewer data to disk.');
+  }
+
   try {
     const sheetSync = await syncViewerToGoogleSheets(record);
     const emailSent = await sendEmailNotification({
       subject: `[Portfolio Viewer] ${record.name}`,
       replyTo: record.email,
+      receiverEmail: process.env.NDA_RECEIVER_EMAIL || process.env.CONTACT_RECEIVER_EMAIL || "siximbazekhaya@gmail.com",
       text: `New portfolio project viewer accepted the NDA.\nName: ${record.name}\nEmail: ${record.email}\nCompany: ${record.company}\nTimestamp: ${record.timestamp}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -346,6 +389,7 @@ async function startServer() {
     console.log(`Serving static assets from: ${distPath}`);
   }
 
+  await loadNdaViewerRecords();
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Express custom server is running on http://localhost:${PORT}`);
   });
