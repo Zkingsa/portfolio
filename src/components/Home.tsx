@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles, FileDown } from 'lucide-react';
 import { jsPDF } from 'jspdf';
-import { personalInfo } from '../data';
+import { personalInfo, workExperience, certifications, achievementsHistory } from '../data';
 import FikaPhoto from '../assets/images/Fika.jpeg';
 
 interface HomeProps {
@@ -117,57 +117,7 @@ export default function Home({ setActiveTab }: HomeProps) {
     // 2. Work Experience
     drawSectionHeader('Work Experience');
 
-    const jobs = [
-      {
-        role: 'AI Engineer & Full-Stack Developer (Internship)',
-        company: 'CAPACITI (YES Youth Program)',
-        date: 'Jan 2026 - Present',
-        bullets: [
-          'Engineering innovative prompt structures and implementing AI pipelines with Google AI Essentials methodologies.',
-          'Developing robust responsive user dashboards using React, Vite, and Tailwind CSS.',
-          'Creating modular layouts and type-safe front-ends optimized for performance and fluid UX.'
-        ]
-      },
-      {
-        role: 'Stock Inventory Specialist',
-        company: 'Makro EL (Retail Solutions)',
-        date: 'Jul 2025 - Dec 2025',
-        bullets: [
-          'Supervised bulk stock verification processes, verified inventory barcodes, and troubleshot warehouse terminal hardware.',
-          'Managed database updates for overnight audits and communicated logistics status to management.',
-          'Maintained 100% item audit accuracy over major quarterly stock audits.'
-        ]
-      },
-      {
-        role: 'IT Technician',
-        company: 'Game Stores',
-        date: 'Dec 2024 - Jun 2025',
-        bullets: [
-          'Diagnostics and repair of point-of-sale (POS) terminal hardware, local network routing, and software installations.',
-          'Replaced components, assembled hardware accessories, and guaranteed minimal operations downtime.',
-          'Reduced overall hardware troubleshooting response times by 35%.'
-        ]
-      },
-      {
-        role: 'FASSET Tutor',
-        company: 'Walter Sisulu University',
-        date: 'May 2024 - Nov 2024',
-        bullets: [
-          'Formulated custom coding lessons and delivered lectures to FASSET scholarship IT students.',
-          'Facilitated hands-on compiler diagnostics tutorials, database query guidelines, and version control structures.',
-          'Supported 90%+ participating students to successfully pass their software development curriculum modules.'
-        ]
-      },
-      {
-        role: 'Peer Assistant Learner',
-        company: 'Walter Sisulu University',
-        date: 'May 2023 - Nov 2023',
-        bullets: [
-          'Coached student cohorts in relational database schemas, query analysis, and object-oriented programming foundations.',
-          'Maintained lab machinery availability and helped freshmen students setup development compilers.'
-        ]
-      }
-    ];
+    const jobs = workExperience;
 
     jobs.forEach(job => {
       checkPageBreak(18);
@@ -193,7 +143,8 @@ export default function Home({ setActiveTab }: HomeProps) {
       y += 4.5;
 
       // Bullets
-      job.bullets.forEach(bullet => {
+      const jobBullets = job.responsibilities || job.bullets || [];
+        jobBullets.forEach(bullet => {
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(8);
         doc.setTextColor(textColor[0], textColor[1], textColor[2]);
@@ -257,16 +208,13 @@ export default function Home({ setActiveTab }: HomeProps) {
 
     // 4. Certifications & Licences
     drawSectionHeader('Certifications & Professional Licences');
-    const certs = [
-      'Google AI Essentials Specialization (Coursera / Google Career Certificates) - May 2026',
-      'Generative AI: Prompt Engineering Basics (Coursera / IBM Skills Network) - May 2026',
-      'South African Code 14 (EC) Professional Driving Licence & PrDP (Heavy Vehicles > 16,000kg) - Expires Mar 2027'
-    ];
-    certs.forEach(cert => {
+    // use live certifications from portfolio data
+    certifications.forEach(cert => {
+      const certLine = `${cert.title} (${cert.issuer}) - ${cert.date}`;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-      const lines = doc.splitTextToSize(cert, contentWidth - 5);
+      const lines = doc.splitTextToSize(certLine, contentWidth - 5);
       const neededHeight = lines.length * 3.8;
       checkPageBreak(neededHeight + 1.5);
       
@@ -278,16 +226,12 @@ export default function Home({ setActiveTab }: HomeProps) {
 
     // 5. Academic Excellence & Wins
     drawSectionHeader('Academic Excellence & Achievements');
-    const achievements = [
-      'Top Performing Coordinator, Walter Sisulu University Peer Tutorial teams (2024).',
-      'Selected as YES Youth Program Delegate at CAPACITI based on advanced developer credentials (2026).',
-      'Active IT Youth Ambassador with heavy logistic capability.'
-    ];
+    const achievements = achievementsHistory || [];
     achievements.forEach(ach => {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-      const lines = doc.splitTextToSize(ach, contentWidth - 5);
+      const lines = doc.splitTextToSize(ach.description || ach.title || String(ach), contentWidth - 5);
       const neededHeight = lines.length * 3.8;
       checkPageBreak(neededHeight + 1.5);
       
