@@ -133,8 +133,9 @@ export default function Home({ setActiveTab }: HomeProps) {
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(8.5);
       doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-      const dateWidth = doc.getTextWidth(job.date);
-      doc.text(job.date, marginX + contentWidth - dateWidth, y);
+      const dateText = job.date || job.period || '';
+      const dateWidth = doc.getTextWidth(dateText);
+      doc.text(dateText, marginX + contentWidth - dateWidth, y);
       y += 4;
 
       // Company
