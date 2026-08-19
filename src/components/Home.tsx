@@ -70,7 +70,7 @@ export default function Home({ setActiveTab }: HomeProps) {
 
       // Col 2
       doc.text('GitHub: github.com/Zkingsa', marginX + contentWidth / 2 + 10, y);
-      doc.text('LinkedIn: linkedin.com/in/fika-zekhaya-siximba-332859312', marginX + contentWidth / 2 + 10, y + 4);
+      doc.text('LinkedIn: www.linkedin.com/in/fika-zekhaya-siximba', marginX + contentWidth / 2 + 10, y + 4);
       y += 13;
 
       // Divider line

@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 const DATA_DIR = path.join(process.cwd(), "data");
 const NDA_STORAGE_FILE = path.join(DATA_DIR, "nda-viewers.json");
 

@@ -17,7 +17,7 @@ export const personalInfo = {
   photoUrl: profilePhoto,
   email: "siximbazekhaya@gmail.com",
   github: "https://github.com/Zkingsa",
-  linkedin: "https://www.linkedin.com/in/fika-zekhaya-siximba-332859312",
+  linkedin: "https://www.linkedin.com/in/fika-zekhaya-siximba",
   bio: {
     background: "Born in South Africa, I developed a strong foundation in programmatic logic and system mechanics. In 2025, I graduated with an ICT Diploma in Applications Development from Walter Sisulu University. I focus on sculpting highly interactive client layouts and powering them with robust AI tools and back-ends. I have mentored dozens of student teams as a tutor and assistant, and am currently scaling AI capabilities at CAPACITI.",
     vision: "To streamline human-machine interfaces by crafting fast, beautiful front-ends and deploying functional, modern AI solutions.",
@@ -238,6 +238,54 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "proj4",
+    title: "Book-Your-Ride",
+    category: "Transportation Booking",
+    stackCategory: "Full Stack",
+    overview: "A ride-booking platform that lets users search and reserve transport options quickly through a clean booking workflow and a reliable backend service deployment.",
+    role: "Full-Stack Developer",
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Render"],
+    outcomes: [
+      "Created a user-friendly transport booking flow with clear reservation interactions.",
+      "Deployed a production-ready backend service for live application access and real-world testing."
+    ],
+    imageUrl: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000&auto=format&fit=crop",
+    demoUrl: "https://ride-booking-backend-qknr.onrender.com",
+    featured: true
+  },
+  {
+    id: "proj5",
+    title: "Car-Predictive-Care",
+    category: "Vehicle Intelligence",
+    stackCategory: "AI Projects",
+    overview: "A predictive vehicle care and maintenance web app that helps users assess service needs and understand how maintenance decisions can improve vehicle health.",
+    role: "AI Product Developer",
+    technologies: ["React", "TypeScript", "Vite", "Machine Learning", "GitHub Pages"],
+    outcomes: [
+      "Built an intuitive predictive maintenance interface for car health insights.",
+      "Presented actionable maintenance recommendations in a streamlined, user-friendly dashboard."
+    ],
+    imageUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop",
+    demoUrl: "https://zkingsa.github.io/Car-Predictive-Care/",
+    featured: true
+  },
+  {
+    id: "proj6",
+    title: "EduBridge",
+    category: "Education Technology",
+    stackCategory: "Front end",
+    overview: "An educational platform designed to connect learners with accessible resources, clear pathways, and a modern learning experience for improved academic engagement.",
+    role: "Front-End Developer",
+    technologies: ["React", "Vite", "Tailwind CSS", "Responsive UI", "GitHub Pages"],
+    outcomes: [
+      "Developed a polished learning-focused interface centered on accessibility and clarity.",
+      "Created a fast, modern front-end experience suitable for educational outreach and student engagement."
+    ],
+    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop",
+    demoUrl: "https://after-math-hub.github.io/EduBridge/",
+    featured: false
+  },
+  {
+    id: "proj7",
     title: "Legacy Portfolio Website",
     category: "Web Portfolio",
     stackCategory: "Front end",
@@ -276,6 +324,16 @@ export const certifications: CertificationItem[] = [
     externalLink: "https://coursera.org/share/26e9a4ab1255dec1a15b1448dcaf31a0"
   },
   {
+    id: "cert3",
+    title: "Software Engineer Practitioner",
+    issuer: "Coursera",
+    date: "August 2026",
+    credentialId: "2d1b959fa1b3c0e4396ddf4f338d19f5",
+    skillsCode: ["Software Engineering", "Professional Practice", "System Design", "Career Readiness"],
+    certificateImageUrl: certificateMockup,
+    externalLink: "https://coursera.org/share/2d1b959fa1b3c0e4396ddf4f338d19f5"
+  },
+  {
     id: "cert4",
     title: "Candidate Professional Development",
     issuer: "Coursera",
@@ -286,7 +344,7 @@ export const certifications: CertificationItem[] = [
     externalLink: "https://coursera.org/share/47fceebc92660367c47c76acf9f7873f"
   },
   {
-    id: "cert3",
+    id: "cert5",
     title: "Heavy Vehicle Driving Licence (Code EC/14 with PrDP)",
     issuer: "South African Department of Transport (Buffalo City DLTC)",
     date: "August 19, 2021",

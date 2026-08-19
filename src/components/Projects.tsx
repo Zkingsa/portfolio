@@ -357,15 +357,12 @@ function ProjectNdaModal({
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-
     const frame = window.requestAnimationFrame(() => {
       modalRef.current?.focus();
     });
 
     return () => {
       window.cancelAnimationFrame(frame);
-      document.body.style.overflow = '';
     };
   }, []);
 
@@ -615,17 +612,46 @@ function SimulatorWindow({ project, onClose }: SimulatorProps) {
         </div>
 
         {project.demoUrl ? (
-          <div className="relative h-[55dvh] min-h-[320px] bg-[#05070B] sm:h-[68vh] sm:min-h-[520px]">
-            <iframe
-              src={project.demoUrl}
-              title={project.title}
-              className="h-full w-full border-0 bg-black"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-              allowFullScreen
-            />
-            <div className="absolute left-0 right-0 top-0 flex items-center justify-between gap-4 border-b border-gray-800 bg-[#090B10]/90 px-6 py-3 backdrop-blur-sm text-xs text-gray-300">
-              <span>Live portfolio preview</span>
-              <span className="rounded-full bg-orange-500/10 px-3 py-1 text-orange-300">Running inside modal</span>
+          <div className="relative h-[55dvh] min-h-[320px] bg-[#05070B] p-3 sm:h-[68vh] sm:min-h-[520px] sm:p-4">
+            <div className="flex h-full flex-col overflow-hidden rounded-[22px] border border-gray-800 bg-[#0A0D12] shadow-[0_12px_40px_rgba(15,23,42,0.45)]">
+              <div className="flex items-center justify-between gap-4 border-b border-gray-800 bg-gradient-to-r from-[#101522] via-[#0F172A] to-[#111827] px-4 py-3 sm:px-5">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                  </div>
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.28em] text-gray-300">
+                    Hosted project preview
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 text-[10px] text-gray-300">
+                  <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 font-semibold text-emerald-300">
+                    Live
+                  </span>
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2.5 py-1 font-semibold text-brand-primary transition-colors hover:bg-brand-primary/20"
+                  >
+                    Open app
+                  </a>
+                </div>
+              </div>
+
+              <div className="relative flex-1 overflow-hidden bg-[#020509]">
+                <iframe
+                  src={project.demoUrl}
+                  title={project.title}
+                  className="h-full w-full border-0 bg-white"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                  allow="fullscreen; clipboard-write; payment; microphone; camera"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         ) : (
