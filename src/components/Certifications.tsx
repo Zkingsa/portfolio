@@ -75,14 +75,6 @@ export default function Certifications() {
                   </p>
                 </div>
 
-                {cert.id === "cert6" && (
-                  <img
-                    src={cert.certificateImageUrl}
-                    alt="Certificate document preview"
-                    className="h-24 w-full rounded-lg object-cover object-center shadow-lg"
-                  />
-                )}
-
                 <div className="flex items-center gap-2 text-xs text-gray-400 font-mono">
                   <Calendar className="h-3.5 w-3.5" />
                   <span>Issued: {cert.date}</span>
