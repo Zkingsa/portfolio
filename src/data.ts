@@ -352,5 +352,16 @@ export const certifications: CertificationItem[] = [
     skillsCode: ["Heavy Vehicles > 16t (Code EC)", "Professional Driving Permit (PrDP GP)", "Cargo Logistics Support", "Defensive Driving Rules"],
     certificateImageUrl: profilePhoto,
     externalLink: "#"
+  },
+  {
+    id: "cert6",
+    title: "Ethical Hacker",
+    issuer: "Cisco Networking Academy",
+    date: "August 25, 2026",
+    credentialId: "4f238633-b6b6-4f2e-9219-2a56c4504078",
+    skillsCode: ["Ethical Hacking", "Penetration Testing", "Vulnerability Scanning", "Network Security"],
+    certificateImageUrl: "/ethical-hacker.png",
+    documentUrl: "/EthicalHackerUpdate20260825-20-uiegx2.pdf",
+    externalLink: "https://www.credly.com/badges/4f238633-b6b6-4f2e-9219-2a56c4504078/public_url"
   }
 ];

@@ -75,6 +75,14 @@ export default function Certifications() {
                   </p>
                 </div>
 
+                {cert.id === "cert6" && (
+                  <img
+                    src={cert.certificateImageUrl}
+                    alt="Cisco Networking Academy Ethical Hacker badge"
+                    className="h-24 w-24 rounded-lg object-cover shadow-lg"
+                  />
+                )}
+
                 <div className="flex items-center gap-2 text-xs text-gray-400 font-mono">
                   <Calendar className="h-3.5 w-3.5" />
                   <span>Issued: {cert.date}</span>
@@ -572,6 +580,23 @@ export default function Certifications() {
                             FEE VERIFIED // RECEIVED: R96.00
                           </div>
                         </div>
+                      </div>
+                    )}
+
+                    {selectedCert.id === "cert6" && selectedCert.documentUrl && (
+                      <div className="w-full overflow-hidden rounded-lg bg-white shadow-xl">
+                        <object
+                          data={selectedCert.documentUrl}
+                          type="application/pdf"
+                          className="h-[min(72dvh,52rem)] w-full"
+                        >
+                          <p className="p-6 text-center text-sm text-gray-700">
+                            This browser cannot display the certificate PDF.{' '}
+                            <a href={selectedCert.documentUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-700 underline">
+                              Open the certificate
+                            </a>
+                          </p>
+                        </object>
                       </div>
                     )}
                   </div>

@@ -213,7 +213,10 @@ export default function Home({ setActiveTab }: HomeProps) {
     drawSectionHeader('Certifications & Professional Licences');
     // use live certifications from portfolio data
     certifications.forEach(cert => {
-      const certLine = `${cert.title} (${cert.issuer}) - ${cert.date}`;
+      const verificationText = cert.externalLink && cert.externalLink !== '#'
+        ? ` - Verify: ${cert.externalLink}`
+        : '';
+      const certLine = `${cert.title} (${cert.issuer}) - ${cert.date}${verificationText}`;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(textColor[0], textColor[1], textColor[2]);
