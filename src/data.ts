@@ -1,7 +1,5 @@
 import profilePhoto from './assets/images/Fika.jpeg';
 import certificateMockup from './assets/images/certificate_mockup_1782129612246.jpg';
-import ethicalHackerBadge from './assets/images/ethical-hacker.png';
-import ethicalHackerCertificate from './assets/documents/EthicalHackerUpdate20260825-20-uiegx2.pdf';
 
 import { 
   EducationItem, 
@@ -362,8 +360,7 @@ export const certifications: CertificationItem[] = [
     date: "August 25, 2026",
     credentialId: "4f238633-b6b6-4f2e-9219-2a56c4504078",
     skillsCode: ["Ethical Hacking", "Penetration Testing", "Vulnerability Scanning", "Network Security"],
-    certificateImageUrl: ethicalHackerBadge,
-    documentUrl: ethicalHackerCertificate,
+    certificateImageUrl: certificateMockup,
     externalLink: "https://www.credly.com/badges/4f238633-b6b6-4f2e-9219-2a56c4504078/public_url"
   }
 ];

@@ -51,7 +51,6 @@ export interface CertificationItem {
   credentialId?: string;
   skillsCode: string[];
   certificateImageUrl: string;
-  documentUrl?: string;
   externalLink?: string;
 }
 

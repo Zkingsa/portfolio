@@ -78,8 +78,8 @@ export default function Certifications() {
                 {cert.id === "cert6" && (
                   <img
                     src={cert.certificateImageUrl}
-                    alt="Cisco Networking Academy Ethical Hacker badge"
-                    className="h-24 w-24 rounded-lg object-cover shadow-lg"
+                    alt="Certificate document preview"
+                    className="h-24 w-full rounded-lg object-cover object-center shadow-lg"
                   />
                 )}
 
@@ -583,13 +583,38 @@ export default function Certifications() {
                       </div>
                     )}
 
-                    {selectedCert.id === "cert6" && selectedCert.documentUrl && (
-                      <div className="w-full overflow-hidden rounded-lg bg-white shadow-xl">
-                        <iframe
-                          src={selectedCert.documentUrl}
-                          title="Cisco Networking Academy Ethical Hacker certificate"
-                          className="h-[min(72dvh,52rem)] w-full"
-                        />
+                    {selectedCert.id === "cert6" && (
+                      <div className="relative w-full max-w-[760px] aspect-[1.414] overflow-hidden rounded-lg border-8 border-slate-200 bg-white p-6 text-slate-900 shadow-xl sm:p-10">
+                        <div className="absolute inset-3 border border-sky-200 sm:inset-5" />
+                        <div className="relative flex h-full flex-col justify-between text-center">
+                          <div className="flex items-start justify-between text-left">
+                            <div>
+                              <div className="text-lg font-black tracking-tight text-sky-600">cisco</div>
+                              <div className="text-[8px] font-semibold uppercase tracking-[0.2em] text-slate-500">Networking Academy</div>
+                            </div>
+                            <ShieldCheck className="h-8 w-8 text-sky-500" />
+                          </div>
+
+                          <div className="space-y-3">
+                            <div className="text-[9px] font-semibold uppercase tracking-[0.35em] text-sky-600">Certificate of Course Completion</div>
+                            <h3 className="font-serif text-3xl font-bold text-slate-900 sm:text-5xl">Ethical Hacker</h3>
+                            <p className="text-sm text-slate-600">This certifies that</p>
+                            <p className="font-serif text-2xl italic text-sky-600 sm:text-3xl">{personalInfo.fullName}</p>
+                            <p className="mx-auto max-w-lg text-xs leading-5 text-slate-600 sm:text-sm">
+                              has successfully completed the Cisco Networking Academy Ethical Hacker course.
+                            </p>
+                          </div>
+
+                          <div className="flex items-end justify-between gap-4 border-t border-slate-200 pt-3 text-left text-[9px] text-slate-500 sm:text-xs">
+                            <div>
+                              <div className="font-semibold text-slate-700">Issued: {selectedCert.date}</div>
+                              <div className="mt-1 break-all font-mono">Credential: {selectedCert.credentialId}</div>
+                            </div>
+                            <a href={selectedCert.externalLink} target="_blank" rel="noopener noreferrer" className="shrink-0 font-semibold text-sky-600 underline">
+                              Verify on Credly
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
