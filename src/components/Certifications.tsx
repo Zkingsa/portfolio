@@ -585,18 +585,11 @@ export default function Certifications() {
 
                     {selectedCert.id === "cert6" && selectedCert.documentUrl && (
                       <div className="w-full overflow-hidden rounded-lg bg-white shadow-xl">
-                        <object
-                          data={selectedCert.documentUrl}
-                          type="application/pdf"
+                        <iframe
+                          src={selectedCert.documentUrl}
+                          title="Cisco Networking Academy Ethical Hacker certificate"
                           className="h-[min(72dvh,52rem)] w-full"
-                        >
-                          <p className="p-6 text-center text-sm text-gray-700">
-                            This browser cannot display the certificate PDF.{' '}
-                            <a href={selectedCert.documentUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-700 underline">
-                              Open the certificate
-                            </a>
-                          </p>
-                        </object>
+                        />
                       </div>
                     )}
                   </div>
