@@ -324,6 +324,16 @@ export const certifications: CertificationItem[] = [
     externalLink: "https://coursera.org/share/26e9a4ab1255dec1a15b1448dcaf31a0"
   },
   {
+    id: "cert2a",
+    title: "AI Engineering",
+    issuer: "Coursera",
+    date: "2026",
+    credentialId: "2ab4937cb433f86a17c1cf3ba6a4736f",
+    skillsCode: ["AI Engineering", "Prompt Design", "Generative AI", "Model Workflow Design"],
+    certificateImageUrl: certificateMockup,
+    externalLink: "https://coursera.org/share/2ab4937cb433f86a17c1cf3ba6a4736f"
+  },
+  {
     id: "cert3",
     title: "Software Engineer Practitioner",
     issuer: "Coursera",
@@ -362,5 +372,14 @@ export const certifications: CertificationItem[] = [
     skillsCode: ["Ethical Hacking", "Penetration Testing", "Vulnerability Scanning", "Network Security"],
     certificateImageUrl: certificateMockup,
     externalLink: "https://www.credly.com/badges/4f238633-b6b6-4f2e-9219-2a56c4504078/public_url"
+  },
+  {
+    id: "cert7",
+    title: "Peer Assisted Learning Leader - System Software",
+    issuer: "Walter Sisulu University",
+    date: "November 2023",
+    skillsCode: ["Peer Learning", "System Software", "Student Mentoring", "Facilitation"],
+    certificateImageUrl: certificateMockup,
+    externalLink: "#"
   }
 ];

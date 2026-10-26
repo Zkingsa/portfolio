@@ -344,7 +344,51 @@ export default function Certifications() {
                       </div>
                     )}
 
-                    {/* Mode 3: Software Engineer Practitioner */}
+                    {/* Mode 3: AI Engineering */}
+                    {selectedCert.id === "cert2a" && (
+                      <div className="relative w-full max-w-[760px] aspect-auto bg-[#F8FBFF] text-slate-900 rounded-[3rem] border-[12px] border-blue-100 p-6 sm:p-8 shadow-[0_30px_70px_rgba(15,39,91,0.18)] overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#DBEEFF_0%,transparent_40%)] opacity-80 pointer-events-none" />
+                        <div className="relative flex flex-col items-center gap-5">
+                          <div className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-blue-200 bg-white shadow-[0_15px_40px_rgba(15,39,91,0.12)]">
+                            <div className="text-3xl font-black text-slate-900">AI</div>
+                          </div>
+                          <div className="space-y-3 text-center">
+                            <div className="text-[10px] font-semibold uppercase tracking-[0.45em] text-slate-500">
+                              Coursera Verified Credential
+                            </div>
+                            <h3 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-none">
+                              AI Engineering
+                            </h3>
+                            <p className="mx-auto max-w-xl text-sm leading-6 text-slate-600">
+                              Verified completion of AI Engineering training, covering prompt design, generative AI, and model workflow design.
+                            </p>
+                          </div>
+
+                          <div className="w-full rounded-[2.5rem] border border-blue-200 bg-white/90 p-5 shadow-[0_20px_40px_rgba(15,39,91,0.08)]">
+                            <div className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-400">
+                              Verification Link
+                            </div>
+                            <div className="mt-3 w-full overflow-hidden rounded-3xl bg-slate-50 px-4 py-3 break-words">
+                              <a
+                                href={selectedCert.externalLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block w-full text-base font-semibold text-blue-700 underline decoration-blue-300 hover:text-blue-900 whitespace-normal break-words"
+                              >
+                                coursera.org/share/{selectedCert.credentialId}
+                              </a>
+                            </div>
+                          </div>
+
+                          <div className="inline-flex items-center justify-center gap-3 rounded-full bg-blue-950 px-5 py-3 text-sm font-bold text-white">
+                            <span>powered by</span>
+                            <span className="uppercase tracking-[0.45em]">coursera</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Mode 4: Software Engineer Practitioner */}
                     {selectedCert.id === "cert3" && (
                       <div className="relative w-full max-w-[760px] aspect-auto bg-[#F8FBFF] text-slate-900 rounded-[3rem] border-[12px] border-blue-100 p-6 sm:p-8 shadow-[0_30px_70px_rgba(15,39,91,0.18)] overflow-hidden">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#DBEEFF_0%,transparent_40%)] opacity-80 pointer-events-none" />
@@ -609,6 +653,61 @@ export default function Certifications() {
                         </div>
                       </div>
                     )}
+
+                    {selectedCert.id === "cert7" && (
+                      <div className="relative mx-auto aspect-[1.414] w-full max-w-[760px] overflow-hidden border-[10px] border-stone-900 bg-[#fffefa] p-5 text-stone-900 shadow-2xl sm:border-[14px] sm:p-10">
+                        <div className="absolute inset-2 border border-stone-300 sm:inset-4" />
+                        <div className="absolute left-0 top-0 h-2 w-1/3 bg-emerald-800 sm:h-3" />
+                        <div className="relative flex h-full flex-col items-center justify-between py-2 text-center sm:py-3">
+                          <div className="space-y-1">
+                            <div className="font-serif text-3xl font-bold uppercase tracking-wide sm:text-5xl">
+                              Certificate
+                            </div>
+                            <div className="text-xs font-medium tracking-[0.2em] text-stone-600 sm:text-base">
+                              OF ACHIEVEMENT
+                            </div>
+                          </div>
+
+                          <div className="w-full max-w-xl space-y-2 sm:space-y-3">
+                            <p className="text-[10px] text-stone-600 sm:text-sm">
+                              This certificate is proudly presented to
+                            </p>
+                            <h3 className="font-serif text-lg font-semibold uppercase tracking-wide text-stone-900 sm:text-3xl">
+                              {personalInfo.fullName}
+                            </h3>
+                            <div className="mx-auto h-px w-2/3 bg-stone-300" />
+                            <p className="text-sm font-semibold tracking-wide text-emerald-900 sm:text-xl">
+                              Peer Assisted Learning Leader
+                            </p>
+                            <p className="text-xs font-medium text-stone-700 sm:text-base">
+                              System Software
+                            </p>
+                            <p className="mx-auto max-w-lg text-[9px] leading-relaxed text-stone-600 sm:text-sm">
+                              In recognition of committed service assisting students as a peer-to-peer facilitator throughout the academic year.
+                            </p>
+                          </div>
+
+                          <div className="flex w-full items-end justify-between border-t border-stone-300 pt-2 text-left sm:pt-3">
+                            <div>
+                              <div className="text-[8px] font-semibold uppercase tracking-wider text-stone-500 sm:text-[10px]">
+                                Issued by
+                              </div>
+                              <div className="text-[9px] font-semibold text-stone-800 sm:text-xs">
+                                {selectedCert.issuer}
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-serif text-sm italic text-emerald-900 sm:text-lg">
+                                {selectedCert.date}
+                              </div>
+                              <div className="text-[8px] uppercase tracking-wider text-stone-500 sm:text-[10px]">
+                                Date of achievement
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                     {/* Action indicators */}
@@ -616,10 +715,11 @@ export default function Certifications() {
                       <div className="flex items-center gap-1.5 text-emerald-400">
                         <ShieldCheck className="h-4 w-4 shrink-0" />
                         <span className="text-[10px] sm:text-xs">
-                          {selectedCert.id === "cert5" 
-                            ? "Official heavy driver endorsement validated" 
-                            : "Credential verified with provider registries"
-                          }
+                          {selectedCert.id === "cert5"
+                            ? "Official heavy driver endorsement validated"
+                            : selectedCert.id === "cert7"
+                              ? "Certificate of achievement issued November 2023"
+                              : "Credential verified with provider registries"}
                         </span>
                       </div>
                       
@@ -643,16 +743,18 @@ export default function Certifications() {
                           Save to PDF / Print
                         </button>
 
-                        <button 
-                          onClick={() => {
-                            navigator.clipboard.writeText(selectedCert.credentialId || "");
-                            setCopiedId(true);
-                            setTimeout(() => setCopiedId(false), 3000);
-                          }}
-                          className="h-8 inline-flex items-center justify-center rounded px-3 border border-gray-800 text-gray-300 hover:text-white transition-colors text-xs"
-                        >
-                          {copiedId ? "Copied!" : "Copy Serial ID"}
-                        </button>
+                        {selectedCert.credentialId && (
+                          <button 
+                            onClick={() => {
+                              navigator.clipboard.writeText(selectedCert.credentialId || "");
+                              setCopiedId(true);
+                              setTimeout(() => setCopiedId(false), 3000);
+                            }}
+                            className="h-8 inline-flex items-center justify-center rounded px-3 border border-gray-800 text-gray-300 hover:text-white transition-colors text-xs"
+                          >
+                            {copiedId ? "Copied!" : "Copy Serial ID"}
+                          </button>
+                        )}
                         
                         {selectedCert.externalLink && selectedCert.externalLink !== "#" ? (
                           <a
